@@ -1821,7 +1821,8 @@ actor DefaultStateService: StateService, ActiveAccountStateProvider, ConfigState
     }
 
     func getIntroCarouselShown() async -> Bool {
-        appSettingsStore.introCarouselShown
+        // Twake Pass: the landing screen is the welcome screen.
+        true
     }
 
     func getLastSyncTime(userId: String?) async throws -> Date? {

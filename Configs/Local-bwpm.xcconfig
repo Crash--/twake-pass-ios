@@ -1,0 +1,6 @@
+// Twake Pass identity, read by Common-bwpm.xcconfig and the target configs.
+ORGANIZATION_IDENTIFIER = fr.valmoriq
+BASE_BUNDLE_ID = $(ORGANIZATION_IDENTIFIER).twakepass
+SHARED_APP_GROUP_IDENTIFIER = group.$(BASE_BUNDLE_ID)
+BMPW_BUNDLE_DISPLAY_NAME = Twake Pass
+DEVELOPMENT_TEAM =

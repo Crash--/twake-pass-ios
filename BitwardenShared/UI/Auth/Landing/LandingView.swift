@@ -13,6 +13,9 @@ struct LandingView: View {
     /// The `Store` for this view.
     @ObservedObject var store: Store<LandingState, LandingAction, LandingEffect>
 
+    /// Opens the Twake sign-up page in the system browser.
+    @Environment(\.openURL) private var openURL
+
     var body: some View {
         ZStack {
             mainContent
@@ -80,8 +83,7 @@ struct LandingView: View {
                 Image(decorative: Asset.Images.logo)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(SharedAsset.Colors.iconSecondary.swiftUIColor)
-                    .frame(maxWidth: .infinity, maxHeight: 34)
+                    .frame(maxWidth: .infinity, maxHeight: 40)
                     .padding(.horizontal, 12)
 
                 Spacer(minLength: 24)
@@ -97,7 +99,7 @@ struct LandingView: View {
     /// The section of the view containing input fields, and action buttons.
     private var landingDetails: some View {
         VStack(alignment: .leading, spacing: 24) {
-            Text(Localizations.logInToBitwarden)
+            Text(Localizations.twakeLogInTitle)
                 .styleGuide(.title2, weight: .semibold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(SharedAsset.Colors.textPrimary.swiftUIColor)
@@ -112,13 +114,14 @@ struct LandingView: View {
                     ),
                     accessibilityIdentifier: "LoginEmailAddressEntry",
                     footerContent: {
-                        RegionSelector(
-                            selectorLabel: Localizations.loggingInOn,
-                            regionName: store.state.region.baseURLDescription,
-                        ) {
-                            await store.perform(.regionPressed)
-                        }
-                        .padding(.vertical, 14)
+                        Text(Localizations.twakeServerX(
+                            store.state.serverHost ?? store.state.region.baseURLDescription,
+                        ))
+                            .styleGuide(.subheadline)
+                            .foregroundColor(SharedAsset.Colors.textSecondary.swiftUIColor)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityIdentifier("TwakeServerLabel")
+                            .padding(.vertical, 14)
                     },
                 )
                 .textFieldConfiguration(.email)
@@ -135,27 +138,35 @@ struct LandingView: View {
                 .contentBlock()
             }
 
-            AsyncButton(Localizations.continue) {
-                await store.perform(.continuePressed)
-            }
-            .accessibilityIdentifier("ContinueButton")
-            .disabled(!store.state.isContinueButtonEnabled)
-            .buttonStyle(.primary())
-
-            if !store.state.isCreateAccountButtonHidden {
-                HStack(spacing: 4) {
-                    Spacer()
-                    Text(Localizations.newAroundHere)
-                        .foregroundColor(SharedAsset.Colors.textSecondary.swiftUIColor)
-                    Button(Localizations.createAccount) {
-                        store.send(.createAccountPressed)
-                    }
-                    .accessibilityIdentifier("CreateAccountButton")
-                    .foregroundColor(SharedAsset.Colors.textInteraction.swiftUIColor)
-                    Spacer()
+            VStack(spacing: 12) {
+                AsyncButton(Localizations.twakeLogInWithTwake) {
+                    await store.perform(.twakeSsoPressed)
                 }
-                .styleGuide(.footnote)
+                .accessibilityIdentifier("TwakeSsoButton")
+                .disabled(!store.state.isContinueButtonEnabled)
+                .buttonStyle(.primary())
+
+                AsyncButton(Localizations.twakeLogInWithMasterPassword) {
+                    await store.perform(.continuePressed)
+                }
+                .accessibilityIdentifier("ContinueButton")
+                .disabled(!store.state.isContinueButtonEnabled)
+                .buttonStyle(.secondary())
             }
+
+            VStack(spacing: 4) {
+                Button(Localizations.twakeSignUp) {
+                    openURL(URL(string: "https://pass-signup.twake.valmoriq.fr")!)
+                }
+                .accessibilityIdentifier("CreateAccountButton")
+
+                AsyncButton(Localizations.twakeLogInWithOrganizationServer) {
+                    await store.perform(.organizationServerPressed)
+                }
+                .accessibilityIdentifier("TwakeOrganizationServerButton")
+            }
+            .buttonStyle(.bitwardenBorderless)
+            .frame(maxWidth: .infinity, alignment: .center)
 
             Button {
                 store.send(.showPreLoginSettings)

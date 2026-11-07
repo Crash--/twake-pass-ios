@@ -27,6 +27,9 @@ struct LandingState: Equatable {
     /// The region selected by the user.
     var region: RegionType
 
+    /// The host of the server the user logs in on.
+    var serverHost: String?
+
     /// A toast message to show in the view.
     var toast: Toast?
 

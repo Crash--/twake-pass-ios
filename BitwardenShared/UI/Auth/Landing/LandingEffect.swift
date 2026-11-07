@@ -13,4 +13,10 @@ enum LandingEffect: Equatable {
 
     /// The region button was pressed.
     case regionPressed
+
+    /// The "Log in with Twake" (single sign-on) button was pressed.
+    case twakeSsoPressed
+
+    /// The "organization's server" button was pressed.
+    case organizationServerPressed
 }

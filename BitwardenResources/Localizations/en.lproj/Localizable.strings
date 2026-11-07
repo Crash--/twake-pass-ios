@@ -3,7 +3,7 @@
 "AddFolder" = "Add folder";
 "AnErrorHasOccurred" = "An error has occurred.";
 "Back" = "Back";
-"Bitwarden" = "Bitwarden";
+"Bitwarden" = "Twake Pass";
 "Cancel" = "Cancel";
 "Copy" = "Copy";
 "CopyLicenseNumber" = "Copy license number";
@@ -1302,3 +1302,9 @@
 "SyncUnsuccessful" = "Sync unsuccessful";
 "WeCouldntSyncYourVaultWithTheServerDescriptionLong" = "We couldn’t sync your vault with the server. Your vault may not reflect your latest changes. You can try again now or it will sync automatically later.";
 "TextToShareRequired" = "Text to share (required)";
+"TwakeLogInTitle" = "Log in to Twake Pass";
+"TwakeLogInWithTwake" = "Log in with Twake";
+"TwakeLogInWithMasterPassword" = "Log in with master password";
+"TwakeSignUp" = "Sign up";
+"TwakeLogInWithOrganizationServer" = "Log in with your organization's server";
+"TwakeServerX" = "Server: %1$@";

@@ -73,7 +73,7 @@ class DefaultEnvironmentService: EnvironmentService {
         } else if let preAuthURLs = await stateService.getPreAuthEnvironmentURLs() {
             urls = preAuthURLs
         } else {
-            urls = .defaultUS
+            urls = .defaultTwakePass
         }
 
         await setPreAuthURLs(urls: managedSettingsURLs ?? urls)

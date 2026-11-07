@@ -96,6 +96,11 @@ class LandingProcessor: StateProcessor<LandingState, LandingAction, LandingEffec
         case .continuePressed:
             updateRememberedEmail()
             await validateEmailAndContinue()
+        case .twakeSsoPressed:
+            updateRememberedEmail()
+            await validateEmailAndContinue(isSso: true)
+        case .organizationServerPressed:
+            coordinator.navigate(to: .selfHosted(currentRegion: state.region), context: self)
         case let .profileSwitcher(profileEffect):
             await handleProfileSwitcherEffect(profileEffect)
         case .regionPressed:
@@ -156,7 +161,7 @@ class LandingProcessor: StateProcessor<LandingState, LandingAction, LandingEffec
 
     /// Validate the currently entered email address and navigate to the login screen.
     ///
-    private func validateEmailAndContinue() async {
+    private func validateEmailAndContinue(isSso: Bool = false) async {
         let email = state.email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         guard email.isValidEmail(useStrictValidation: false) else {
             coordinator.showAlert(.invalidEmail)
@@ -170,7 +175,7 @@ class LandingProcessor: StateProcessor<LandingState, LandingAction, LandingEffec
             return
         }
 
-        coordinator.navigate(to: .login(username: email))
+        coordinator.navigate(to: isSso ? .enterpriseSingleSignOn(email: email) : .login(username: email))
     }
 
     /// Updates the value of `rememberedEmail` in the app settings store with the `email` value in `state`.
@@ -273,6 +278,7 @@ extension LandingProcessor: RegionDelegate {
         guard !urls.isEmpty else { return }
         await services.environmentService.setPreAuthURLs(urls: urls)
         state.region = region
+        state.serverHost = urls.base?.host
 
         // - Using `Task` for `refreshConfig` ensures that this call doesn't delay other operations,
         //   such as closing the Self-host settings view or triggering `.appeared` events. These issues

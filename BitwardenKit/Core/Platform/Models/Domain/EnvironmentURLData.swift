@@ -179,6 +179,9 @@ public extension EnvironmentURLData {
 }
 
 public extension EnvironmentURLData {
+    /// The Twake Pass server, used until the user picks their organization's server.
+    static let defaultTwakePass = EnvironmentURLData(base: URL(string: "https://pass.twake.valmoriq.fr")!)
+
     /// The default URLs for the US region.
     static let defaultUS = EnvironmentURLData(
         api: URL(string: "https://api.bitwarden.com")!,

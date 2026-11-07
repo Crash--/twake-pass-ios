@@ -3,7 +3,7 @@
 "AddFolder" = "Ajouter un dossier";
 "AnErrorHasOccurred" = "Une erreur s'est produite.";
 "Back" = "Retour";
-"Bitwarden" = "Bitwarden";
+"Bitwarden" = "Twake Pass";
 "Cancel" = "Annuler";
 "Copy" = "Copier";
 "CopyLicenseNumber" = "Copier le numéro de permis de conduire";
@@ -1301,3 +1301,9 @@
 "NotNow" = "Pas maintenant";
 "SyncUnsuccessful" = "Échec de la synchronisation";
 "WeCouldntSyncYourVaultWithTheServerDescriptionLong" = "Nous n'avons pas pu synchroniser votre coffre avec le serveur. Votre coffre pourrait ne pas refléter vos dernières modifications. Vous pouvez réessayer maintenant ou il se synchronisera automatiquement plus tard.";
+"TwakeLogInTitle" = "Connexion à Twake Pass";
+"TwakeLogInWithTwake" = "Se connecter avec Twake";
+"TwakeLogInWithMasterPassword" = "Se connecter avec le mot de passe maître";
+"TwakeSignUp" = "S'inscrire";
+"TwakeLogInWithOrganizationServer" = "Se connecter avec le serveur de l'organisation";
+"TwakeServerX" = "Serveur : %1$@";
